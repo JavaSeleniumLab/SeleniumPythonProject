@@ -1,7 +1,7 @@
 import pytest
 
 from POM.Pages.LoginPage import LoginPage
-from POM.DriverSetUp import DriverSetUp
+from Fixture.FixtureSetUp import driver
 
 @pytest.mark.parametrize("username, password",[
     ("standard_user", "secret_sauce"),
@@ -10,9 +10,8 @@ from POM.DriverSetUp import DriverSetUp
 ])
 
 
-def test_login(username, password):
-    login = LoginPage()
+def test_login(driver,username, password):
+    login = LoginPage(driver)
     login.login(username, password)
 
-def test_login2():
-    print("test_login")
+

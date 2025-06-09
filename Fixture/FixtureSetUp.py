@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
-pytest.fixture(scope="function")
+@pytest.fixture(scope="function")
 def driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--headed')
