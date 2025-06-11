@@ -1,8 +1,4 @@
-from selenium.common import NoAlertPresentException, TimeoutException
-from selenium.webdriver.edge.webdriver import WebDriver
-from selenium.webdriver.support.expected_conditions import presence_of_all_elements_located, alert_is_present
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
 from Fixture.FixtureSetUp import driver
 
 class LoginPage:

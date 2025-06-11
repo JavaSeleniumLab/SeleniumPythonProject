@@ -8,6 +8,8 @@ from Fixture.FixtureSetUp import driver
 inventoryItems = "//button[@class='btn btn_primary btn_small btn_inventory ']"
 backPackButton = "//button[@data-test='add-to-cart-sauce-labs-backpack']"
 numberOfItems = "//div[@class='inventory_list']/div"
+shoppingCartNumberOfItems = "//a[@class='shopping_cart_link']/span"
+#addItemPassedByIndex = f"//div[@class='inventory_list']/div[{0}]//button"
 
 
 def accept_alert(driver, timeout = 5 ):
@@ -40,9 +42,24 @@ def add_all_inventory_items(driver):
 
 
 def check_number_of_items(driver):
-        inventoryList =driver.find_elements(By.XPATH, numberOfItems )
-        print("Current URL:", driver.current_url)
-       # self.inventoryList = WebDriverWait (self.driver, 10).until(presence_of_all_elements_located(self.inventoryList))
-        print("Number of items found:", len(inventoryList))
-        assert len(inventoryList) == 6, f"Expected 6 items, but found {len(inventoryList)}"
+    inventoryList =driver.find_elements(By.XPATH, numberOfItems )
+    print("Current URL:", driver.current_url)
+    print("Number of items found:", len(inventoryList))
+    assert len(inventoryList) == 6, f"Expected 6 items, but found {len(inventoryList)}"
 
+
+def check_number_of_items_in_shopping_cart(driver, number_to_check):
+    shoppingCartNumberOfItemsInCart = driver.find_element(By.XPATH, shoppingCartNumberOfItems).text
+    print(shoppingCartNumberOfItemsInCart, "@@@@@@@@@@@@")
+    assert int(shoppingCartNumberOfItemsInCart) == number_to_check, (f"Expected {number_to_check} items, "
+                                                                     f"but found {shoppingCartNumberOfItemsInCart}")
+
+    return int(shoppingCartNumberOfItemsInCart)
+
+
+def add_number_of_items_passed_by_user(driver, numberPassedByUser):
+    for i in range(numberPassedByUser):  # 0 to 4
+     driver.find_element(By.XPATH, f"//div[@class='inventory_list']/div[{i+1}]//button").click()
+    actual_number_of_items = check_number_of_items_in_shopping_cart(driver, numberPassedByUser)
+    assert numberPassedByUser == actual_number_of_items, (f"Expected {numberPassedByUser} items, "
+                                                          f"but found {actual_number_of_items}")
