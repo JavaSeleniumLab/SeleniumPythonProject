@@ -9,7 +9,7 @@ inventoryItems = "//button[@class='btn btn_primary btn_small btn_inventory ']"
 backPackButton = "//button[@data-test='add-to-cart-sauce-labs-backpack']"
 numberOfItems = "//div[@class='inventory_list']/div"
 shoppingCartNumberOfItems = "//a[@class='shopping_cart_link']/span"
-#addItemPassedByIndex = f"//div[@class='inventory_list']/div[{0}]//button"
+addItemPassedByIndex = f"//div[@class='inventory_list']/div[{0+1}]//button"
 
 
 def accept_alert(driver, timeout = 5 ):
@@ -63,3 +63,8 @@ def add_number_of_items_passed_by_user(driver, numberPassedByUser):
     actual_number_of_items = check_number_of_items_in_shopping_cart(driver, numberPassedByUser)
     assert numberPassedByUser == actual_number_of_items, (f"Expected {numberPassedByUser} items, "
                                                           f"but found {actual_number_of_items}")
+
+
+def remove_added_items_passed_by_user(driver, numberPassedByUser):
+    for i in range(numberPassedByUser):
+        driver.find_element(By.XPATH, f"//div[@class='inventory_list']/div[{i+1}]//button[text()='Remove']").click()
